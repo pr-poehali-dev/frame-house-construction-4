@@ -256,17 +256,23 @@ const Index = () => {
                   Оставьте заявку — рассчитаем смету и предложим оптимальное решение по фундаменту и каркасу.
                 </p>
                 <div className="mt-8 space-y-4">
-                  <a href="tel:+70000000000" className="flex items-center gap-3 group">
+                  <a href="tel:+79044431644" className="flex items-center gap-3 group">
                     <span className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center group-hover:bg-accent transition-colors">
                       <Icon name="Phone" size={18} className="group-hover:text-accent-foreground" />
                     </span>
-                    <span className="font-medium">+7 (000) 000-00-00</span>
+                    <span className="font-medium">+7 (904) 443-16-44</span>
                   </a>
-                  <a href="mailto:info@karkasmo.ru" className="flex items-center gap-3 group">
+                  <a href="mailto:Lazarevis@gmail.com" className="flex items-center gap-3 group">
                     <span className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center group-hover:bg-accent transition-colors">
                       <Icon name="Mail" size={18} className="group-hover:text-accent-foreground" />
                     </span>
-                    <span className="font-medium">info@karkasmo.ru</span>
+                    <span className="font-medium">Lazarevis@gmail.com</span>
+                  </a>
+                  <a href="mailto:lazarev-vany@mail.ru" className="flex items-center gap-3 group">
+                    <span className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center group-hover:bg-accent transition-colors">
+                      <Icon name="Mail" size={18} className="group-hover:text-accent-foreground" />
+                    </span>
+                    <span className="font-medium">lazarev-vany@mail.ru</span>
                   </a>
                   <div className="flex items-center gap-3">
                     <span className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
