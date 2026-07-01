@@ -7,6 +7,49 @@ import { useReveal } from '@/hooks/useReveal';
 const BEFORE_IMG = 'https://cdn.poehali.dev/projects/754de67a-0731-4bca-a69e-90ca97ce60ed/files/8642e07a-a3d2-45c3-bbd1-a3b678d2a1e6.jpg';
 const AFTER_IMG = 'https://cdn.poehali.dev/projects/754de67a-0731-4bca-a69e-90ca97ce60ed/files/288acaf7-bebb-4bcf-8d13-788e893ee566.jpg';
 
+const PROJECTS = [
+  {
+    img: 'https://cdn.poehali.dev/projects/754de67a-0731-4bca-a69e-90ca97ce60ed/files/870cb268-6e37-4e93-b068-ce2a7575d99a.jpg',
+    name: 'Дом в Одинцово',
+    area: '148 м²',
+    floors: '2 этажа',
+    region: 'Одинцовский р-н',
+    period: '4 мес.',
+    tag: 'Под ключ',
+    desc: 'Каркасный дом с тёмным фасадом и панорамным остеклением. Фундамент УШП, базальтовое утепление 200 мм, кровля — металлочерепица.',
+  },
+  {
+    img: 'https://cdn.poehali.dev/projects/754de67a-0731-4bca-a69e-90ca97ce60ed/files/b52adafb-92d1-43b4-87ec-195e20448381.jpg',
+    name: 'Дом в Серпухове',
+    area: '96 м²',
+    floors: '1 этаж',
+    region: 'Серпуховский р-н',
+    period: '3 мес.',
+    tag: 'Тепловой контур',
+    desc: 'Одноэтажный каркасник с штукатурным фасадом. Свайно-винтовой фундамент, финское утепление, двухкамерные ПВХ-окна.',
+  },
+  {
+    img: 'https://cdn.poehali.dev/projects/754de67a-0731-4bca-a69e-90ca97ce60ed/files/168b8032-9d9a-4ebc-9087-29c7684f6bcf.jpg',
+    name: 'Дом в Красногорске',
+    area: '172 м²',
+    floors: '2 этажа',
+    region: 'Красногорский р-н',
+    period: '5 мес.',
+    tag: 'Под ключ',
+    desc: 'Дом с комбинированным фасадом: фиброцементные панели + термодревесина. Плоская кровля, внутрипольные конвекторы, рекуперация.',
+  },
+  {
+    img: 'https://cdn.poehali.dev/projects/754de67a-0731-4bca-a69e-90ca97ce60ed/files/50d02ead-5e1c-42c5-915b-8c62a55198b1.jpg',
+    name: 'Дом в Дмитрове',
+    area: '124 м²',
+    floors: '1.5 этажа',
+    region: 'Дмитровский р-н',
+    period: '3.5 мес.',
+    tag: 'Субподряд',
+    desc: 'Каркасник с мансардой и открытой верандой. Горизонтальный сайдинг из термодерева, ленточный фундамент, газовое отопление.',
+  },
+];
+
 const NAV = [
   { id: 'about', label: 'О компании' },
   { id: 'services', label: 'Услуги' },
@@ -200,22 +243,64 @@ const Index = () => {
           <div className="reveal max-w-2xl">
             <span className="font-display uppercase text-sm tracking-widest text-accent">Портфолио</span>
             <h2 className="font-display font-bold uppercase text-4xl md:text-5xl leading-tight mt-4">
-              До и после
+              Реализованные объекты
             </h2>
             <p className="mt-4 text-muted-foreground text-lg">
-              Потяните ползунок, чтобы увидеть, как пустой участок превращается в готовый дом.
+              Каркасные дома Московской области — от проекта до ключей.
             </p>
           </div>
-          <div className="mt-12 reveal max-w-4xl mx-auto">
-            <BeforeAfter before={BEFORE_IMG} after={AFTER_IMG} beforeLabel="Участок" afterLabel="Готовый дом" />
-          </div>
-          <div className="mt-8 grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {[{ icon: 'MapPin', t: 'Одинцовский р-н' }, { icon: 'Ruler', t: '124 м² · 2 этажа' }, { icon: 'CalendarCheck', t: 'Срок 4 месяца' }].map((c) => (
-              <div key={c.t} className="reveal flex items-center gap-3 bg-card rounded-xl p-4 border border-border">
-                <Icon name={c.icon} size={20} className="text-accent" />
-                <span className="font-medium text-sm">{c.t}</span>
+
+          {/* Сетка проектов */}
+          <div className="mt-12 grid md:grid-cols-2 gap-8">
+            {PROJECTS.map((p, i) => (
+              <div key={p.name} className="reveal group bg-card rounded-2xl border border-border overflow-hidden hover:border-accent hover:-translate-y-1 transition-all duration-300" style={{ transitionDelay: `${i * 60}ms` }}>
+                <div className="relative overflow-hidden aspect-[16/10]">
+                  <img src={p.img} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <span className="absolute top-4 left-4 bg-accent text-accent-foreground text-xs font-display font-semibold uppercase tracking-wider px-3 py-1 rounded-full">
+                    {p.tag}
+                  </span>
+                </div>
+                <div className="p-6">
+                  <h3 className="font-display font-bold text-2xl">{p.name}</h3>
+                  <p className="text-muted-foreground text-sm mt-2 leading-relaxed">{p.desc}</p>
+                  <div className="mt-5 grid grid-cols-2 gap-3">
+                    {[
+                      { icon: 'Maximize2', label: 'Площадь', val: p.area },
+                      { icon: 'Building2', label: 'Этажность', val: p.floors },
+                      { icon: 'MapPin', label: 'Район', val: p.region },
+                      { icon: 'Clock', label: 'Срок', val: p.period },
+                    ].map((spec) => (
+                      <div key={spec.label} className="flex items-center gap-2 bg-secondary rounded-lg px-3 py-2">
+                        <Icon name={spec.icon} size={15} className="text-accent shrink-0" />
+                        <div>
+                          <div className="text-xs text-muted-foreground">{spec.label}</div>
+                          <div className="text-sm font-semibold">{spec.val}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             ))}
+          </div>
+
+          {/* Слайдер до/после */}
+          <div className="mt-16 reveal">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-1 h-8 bg-accent rounded-full" />
+              <h3 className="font-display font-bold text-2xl uppercase">Процесс строительства · До и после</h3>
+            </div>
+            <div className="max-w-4xl">
+              <BeforeAfter before={BEFORE_IMG} after={AFTER_IMG} beforeLabel="Участок" afterLabel="Готовый дом" />
+              <div className="mt-5 grid sm:grid-cols-3 gap-4">
+                {[{ icon: 'MapPin', t: 'Одинцовский р-н' }, { icon: 'Ruler', t: '124 м² · 2 этажа' }, { icon: 'CalendarCheck', t: 'Срок 4 месяца' }].map((c) => (
+                  <div key={c.t} className="flex items-center gap-3 bg-card rounded-xl p-4 border border-border">
+                    <Icon name={c.icon} size={18} className="text-accent" />
+                    <span className="font-medium text-sm">{c.t}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
