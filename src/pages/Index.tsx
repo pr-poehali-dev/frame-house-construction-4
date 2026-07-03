@@ -67,13 +67,64 @@ const SERVICES = [
   { icon: 'Wrench', title: 'Инженерные сети', text: 'Электрика, сантехника, отопление, вентиляция и рекуперация «под ключ».' },
 ];
 
-const STAGES = [
-  { n: '01', title: 'Подготовка и проект', text: 'Изыскания, проектирование, расчистка и планировка участка, временные коммуникации.' },
-  { n: '02', title: 'Фундамент', text: 'Земляные работы, опалубка, армирование, бетонирование и гидроизоляция.' },
-  { n: '03', title: 'Силовой каркас', text: 'Нижняя обвязка, сборка стен, перекрытия, стропильная система и кровля.' },
-  { n: '04', title: 'Фасад и утепление', text: 'Теплоизоляция, мембраны с проклейкой швов, наружная отделка фасада.' },
-  { n: '05', title: 'Окна и коммуникации', text: 'Остекление, монтаж электрики, сантехники, отопления и вентиляции.' },
-  { n: '06', title: 'Внутренняя отделка', text: 'Черновая обшивка, стяжка, чистовые покрытия, покраска, межкомнатные двери.' },
+const PREP_STAGES = [
+  { icon: 'FileCheck2', title: 'Согласование проекта', text: 'Изучение рабочей документации, проверка сметы заказчика и подписание графика производства работ.' },
+  { icon: 'ClipboardCheck', title: 'Приёмка свайного поля', text: 'Проверка геометрии фундамента, смонтированного заказчиком, подписание акта скрытых работ при необходимости.' },
+  { icon: 'CalendarRange', title: 'График производства работ', text: 'Разработка циклограммы, где каждый дом сдвигается по стадиям на 1–2 недели.' },
+  { icon: 'MapPinCheck', title: 'Приёмка стройплощадки', text: 'Проверка готовности подъездных путей, материалов заказчика и фундамента на каждом из 4–6 участков.' },
+  { icon: 'PackageCheck', title: 'Приёмка материалов', text: 'Приём и складирование материалов на объекте.' },
+];
+
+const PROCESS_STEPS = [
+  {
+    letter: 'А',
+    title: 'Фундамент',
+    icon: 'Layers',
+    note: 'Выполняет другой субподрядчик заказчика',
+    items: [],
+  },
+  {
+    letter: 'Б',
+    title: 'Монтаж силового каркаса',
+    icon: 'Frame',
+    items: [
+      'Монтаж нижней обвязки, гидроизоляция',
+      'Монтаж лаг пола, настил чернового пола (ОСП или фанера)',
+      'Установка верхней обвязки, ригелей (согласно смете)',
+      'Монтаж межэтажных перекрытий (балки) и стропильной системы',
+    ],
+  },
+  {
+    letter: 'В',
+    title: 'Внешний контур и кровля',
+    icon: 'Home',
+    badge: '5–6 дней на дом',
+    items: [
+      'Монтаж ветро-влагозащитной мембраны, обрешётки и контробрешётки',
+      'Устройство кровельного покрытия (металлочерепица или гибкая черепица)',
+      'Монтаж фасадной отделки и контробрешётки под неё',
+      'Монтаж окон и входных дверей (по смете)',
+    ],
+  },
+  {
+    letter: 'Г',
+    title: 'Инженерные и отделочные работы',
+    icon: 'Wrench',
+    items: [
+      'Монтаж пароизоляции, проклейка стыков специальными лентами',
+      'Укладка утеплителя (минеральная вата, плиты) в стены, полы и перекрытия',
+      'Монтаж внутренней обрешётки и чистовой отделки (вагонка, гипсокартон — согласно смете)',
+    ],
+  },
+  {
+    letter: 'Д',
+    title: 'Сдача объекта',
+    icon: 'BadgeCheck',
+    items: [
+      'Проведение визуального осмотра и подписание акта выполненных работ с заказчиком (генподрядчиком)',
+      'Устранение замечаний',
+    ],
+  },
 ];
 
 const STATS = [
@@ -311,17 +362,71 @@ const Index = () => {
           <div className="reveal max-w-2xl">
             <span className="font-display uppercase text-sm tracking-widest text-accent">Этапы работ</span>
             <h2 className="font-display font-bold uppercase text-4xl md:text-5xl leading-tight mt-4">
-              От участка до новоселья
+              Строительно-монтажные работы
             </h2>
+            <p className="mt-4 text-primary-foreground/60 text-lg">
+              Работаем циклично на нескольких объектах одновременно — от подготовки площадки до сдачи готового дома.
+            </p>
           </div>
-          <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {STAGES.map((s, i) => (
-              <div key={s.n} className="reveal border-t-2 border-accent pt-5" style={{ transitionDelay: `${i * 50}ms` }}>
-                <span className="font-display font-bold text-5xl text-accent/40">{s.n}</span>
-                <h3 className="font-display font-semibold text-xl mt-3">{s.title}</h3>
-                <p className="text-primary-foreground/60 mt-2 text-sm">{s.text}</p>
-              </div>
-            ))}
+
+          {/* Подготовительный этап */}
+          <div className="mt-14 reveal">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="w-8 h-8 rounded-full bg-accent text-accent-foreground font-display font-bold flex items-center justify-center text-sm shrink-0">1</span>
+              <h3 className="font-display font-semibold text-2xl uppercase">Подготовительный этап <span className="text-primary-foreground/40 normal-case text-base font-normal">(до старта работ)</span></h3>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {PREP_STAGES.map((s, i) => (
+                <div key={s.title} className="reveal bg-primary-foreground/5 border border-primary-foreground/10 rounded-2xl p-6 hover:border-accent/60 transition-colors" style={{ transitionDelay: `${i * 40}ms` }}>
+                  <span className="w-11 h-11 rounded-xl bg-accent/15 flex items-center justify-center">
+                    <Icon name={s.icon} size={20} className="text-accent" />
+                  </span>
+                  <h4 className="font-display font-semibold text-lg mt-4">{s.title}</h4>
+                  <p className="text-primary-foreground/60 mt-2 text-sm leading-relaxed">{s.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Производственный процесс */}
+          <div className="mt-16 reveal">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="w-8 h-8 rounded-full bg-accent text-accent-foreground font-display font-bold flex items-center justify-center text-sm shrink-0">2</span>
+              <h3 className="font-display font-semibold text-2xl uppercase">Производственный процесс</h3>
+            </div>
+            <p className="text-primary-foreground/50 text-sm ml-11">Цикл повторяется для всех 4–6 домов</p>
+
+            <div className="mt-8 space-y-5">
+              {PROCESS_STEPS.map((step, i) => (
+                <div key={step.letter} className="reveal flex flex-col md:flex-row gap-5 md:gap-8 bg-primary-foreground/5 border border-primary-foreground/10 rounded-2xl p-6 md:p-7" style={{ transitionDelay: `${i * 50}ms` }}>
+                  <div className="flex md:flex-col items-center md:items-start gap-3 md:gap-2 md:w-40 shrink-0">
+                    <span className="w-11 h-11 rounded-xl bg-accent/15 flex items-center justify-center">
+                      <Icon name={step.icon} size={20} className="text-accent" />
+                    </span>
+                    <div>
+                      <div className="font-display font-bold text-2xl text-accent">Шаг {step.letter}</div>
+                      {step.badge && <div className="text-xs text-primary-foreground/50 mt-0.5">{step.badge}</div>}
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-display font-semibold text-xl">{step.title}</h4>
+                    {step.note && (
+                      <p className="mt-2 text-sm text-primary-foreground/60 italic">{step.note}</p>
+                    )}
+                    {step.items.length > 0 && (
+                      <ul className="mt-3 space-y-2">
+                        {step.items.map((it) => (
+                          <li key={it} className="flex items-start gap-2.5 text-sm text-primary-foreground/70">
+                            <Icon name="Check" size={15} className="text-accent shrink-0 mt-0.5" />
+                            <span>{it}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
